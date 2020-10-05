@@ -1,0 +1,7 @@
+svg.isFavorite {
+  color: orange;
+}
+
+svg.isFavorite:hover {
+  color: orange;
+}
