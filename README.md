@@ -1,6 +1,6 @@
 <br/>
 
-# React PhtoWiz!
+# React PhotoWiz!
 
 - Using Unsplash API to grab random search query photos
 - Material UI elements to easily render grid, cards and icons
