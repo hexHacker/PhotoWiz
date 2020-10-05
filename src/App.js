@@ -35,9 +35,6 @@ class App extends Component {
   };
 
   componentDidMount() {
-    // axios
-    //   .get('https://jsonplaceholder.typicode.com/photos?_limit=6')
-    //   .then(res => this.setState({ photos: res.data }));
     this.SearchPhotos();
 
   }
@@ -94,7 +91,6 @@ class App extends Component {
 
 
   DeletePhoto = id => {
-    //axios.delete(`https://jsonplaceholder.typicode.com/photos/${id}`).then(res =>
     this.setState({
       photos: [...this.state.photos.filter(p => p.id !== id)]
     });
