@@ -10,11 +10,11 @@ export default function () {
     };
 
     return (
-        <Paper>
+        <Paper style={{ paddingBottom: 5 }}>
             <Tabs value={value} indicatorColor="primary" onChange={handleChange} centered >
-                <Tab label="One"></Tab>
-                <Tab label="Two"></Tab>
-                <Tab label="Three"></Tab>
+                <Tab label="1"></Tab>
+                <Tab label="2"></Tab>
+                <Tab label="3"></Tab>
             </Tabs>
         </Paper>
     )

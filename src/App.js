@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, createContext } from 'react'
 import { Backdrop, CircularProgress } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import PhotoGallery from './components/Photos/PhotoGallery'
 import { Header, Footer } from './Layouts'
@@ -7,11 +8,25 @@ import Unsplash, { toJson } from 'unsplash-js';
 import './App.css';
 
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#5380ab'
+    },
+    secondary: {
+      main: '#8cafd0'
+    }
+  }
+})
+
+
 const unsplash = new Unsplash({
   accessKey: "cnDKzdyQV7xzUw7pU9UWini2PMmw0qdBEgNUYpoKMOY",
   secret: "FGOUrTjAhyvxDU2IqZnV4ln4LpZEg7YsP0s-hCi9iZU"
 });
 
+
+const ThemeContext = createContext('light');
 
 
 class App extends Component {
@@ -97,26 +112,34 @@ class App extends Component {
 
   render() {
     return (
+      <MuiThemeProvider theme={theme}>
 
-      <div className={'app ' + this.state.theme}>
+        <div className={'app ' + this.state.theme}>
 
-        <Header photos={this.state.photos.length} favorites={this.state.favorites} toggleTheme={this.toggleTheme} toggleFavorite={this.ToggleFavorite} removeFavorite={this.RemoveFavorite} handleSearch={this.UpdateSearch} />
+          <Header photos={this.state.photos.length} favorites={this.state.favorites} toggleTheme={this.toggleTheme} toggleFavorite={this.ToggleFavorite} removeFavorite={this.RemoveFavorite} handleSearch={this.UpdateSearch} />
 
-        <Backdrop open={this.state.isUpdating} style={{ color: '#111', zIndex: 9 }}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
+          <Backdrop open={this.state.isUpdating} style={{ color: '#111', zIndex: 9 }}>
+            <CircularProgress color="inherit" />
+          </Backdrop>
 
-        {/* <div style={{ marginTop: '9vw' }}>&nbsp;</div> */}
+          {this.state.photos.length > 0
+            // show photo results
+            ? <PhotoGallery photos={this.state.photos} search={this.state.Search} favorites={this.state.favorites} removeFavorite={this.AadFavorite} deletePhoto={this.DeletePhoto} toggleFavorite={this.ToggleFavorite} isFavorite={this.IsFavorite} />
 
-        {this.state.photos.length > 0
-          ? <PhotoGallery photos={this.state.photos} search={this.state.Search} favorites={this.state.favorites} removeFavorite={this.AadFavorite} deletePhoto={this.DeletePhoto} toggleFavorite={this.ToggleFavorite} isFavorite={this.IsFavorite} />
-          : <h3 style={{ textAlign: 'center' }}>No matching photos found!</h3>
-        }
+            // no results message 
+            : <div class='text-info'>
+              {this.state.isUpdating
+                ? <h3></h3>
+                : <h3>No matching photos found!</h3>
+              }
+            </div>
+          }
 
-        <Footer />
+          <Footer />
 
-      </div>
+        </div>
 
+      </MuiThemeProvider>
     );
   }
 }

@@ -25,3 +25,14 @@ body {
 .app.light svg.isFavorite:hover {
   color: orange;
 }
+
+.text-info {
+  height: 80vh;
+}
+
+.text-info h3 {
+  text-align: center;
+  margin: 0 auto;
+  top: 50%;
+  position: relative;
+}
