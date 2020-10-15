@@ -1,7 +1,27 @@
-svg.isFavorite {
+body {
+  margin: 0;
+}
+
+.app {
+  transition: all 0.25s ease-in-out;
+}
+
+.app.dark {
+  background: #3d3c51;
+  color: #ccc;
+}
+
+.app.dark svg.isFavorite {
+  color: #777;
+}
+.app.dark svg.isFavorite:hover {
+  color: #777;
+}
+
+.app.light svg.isFavorite {
   color: orange;
 }
 
-svg.isFavorite:hover {
+.app.light svg.isFavorite:hover {
   color: orange;
 }

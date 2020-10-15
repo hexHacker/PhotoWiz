@@ -2,6 +2,7 @@ import React from 'react'
 import { AppBar, Toolbar } from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import ColorLensOutlined from '@material-ui/icons/ColorLensOutlined';
 import InputBase from '@material-ui/core/InputBase';
 import FavoritesMenu from '../components/Favorites/FavoritesMenu'
 import Hidden from '@material-ui/core/Hidden';
@@ -79,7 +80,7 @@ export default function Header(props) {
 
 
     return (
-        <AppBar className={classes.appbar} position="fixed">
+        <AppBar className={classes.appbar} position="sticky">
             <Toolbar>
                 <Hidden smDown>
                     <h1 >PhotoWiz</h1>
@@ -98,6 +99,8 @@ export default function Header(props) {
                         onKeyUp={(e) => handleChangeAndEnter(e)}
                     />
                 </div>
+
+                <ColorLensOutlined titleAccess="theme" style={{ cursor: 'pointer' }} onClick={props.toggleTheme} />
 
                 <div style={{ position: 'absolute', right: 10 }}>
                     <FavoritesMenu favorites={props.favorites} toggleFavorite={props.toggleFavorite} removeFavorite={props.removeFavorite} />
