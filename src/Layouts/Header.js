@@ -6,6 +6,7 @@ import ColorLensOutlined from '@material-ui/icons/ColorLensOutlined';
 import InputBase from '@material-ui/core/InputBase';
 import FavoritesMenu from '../components/Favorites/FavoritesMenu'
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -64,6 +65,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             display: 'none',
         },
+    },
+    themeIcon: {
+        position: 'absolute',
+        right: 65,
+        cursor: 'pointer'
     }
 }));
 
@@ -100,7 +106,9 @@ export default function Header(props) {
                     />
                 </div>
 
-                <ColorLensOutlined titleAccess="theme" style={{ cursor: 'pointer' }} onClick={props.toggleTheme} />
+                <Button onClick={props.toggleTheme} className={classes.themeIcon}>
+                    <ColorLensOutlined titleAccess="theme" />
+                </Button>
 
                 <div style={{ position: 'absolute', right: 10 }}>
                     <FavoritesMenu favorites={props.favorites} toggleFavorite={props.toggleFavorite} removeFavorite={props.removeFavorite} />

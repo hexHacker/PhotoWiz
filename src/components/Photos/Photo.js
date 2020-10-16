@@ -30,7 +30,7 @@ class Photo extends Component {
         const handleFavorites = (id, desc) => {
             const fav = {
                 id,
-                desc: desc// && desc.length > 35 ? desc.substring(0, 35) + '..' : desc
+                desc//: desc && desc.length > 35 ? desc.substring(0, 35) + '..' : desc
             }
             this.props.toggleFavorite(fav);
         }

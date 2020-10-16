@@ -45,9 +45,10 @@ const StyledMenuItem = withStyles((theme) => ({
     root: {
         minWidth: '40vw',
         maxWidth: '55vw',
-        backgroundColor: '#dce9f6',
+        borderBottom: '1px dashed #ccc',
+        // backgroundColor: '#dce9f6',
         '&:hover': {
-            backgroundColor: '#b5cbdf'
+            backgroundColor: '#eee'
         }
         // '&:focus': {
         //     backgroundColor: theme.palette.secondary.main,
@@ -112,7 +113,7 @@ export default function FavoritesMenu(props) {
                                 <DeleteIcon fontSize="small" onClick={handleDelete.bind(this, fav)} />
                             </ListItemIcon>
                             <Typography variant="body1" className={classes.typography} >
-                                {fav.desc}
+                                {fav.desc.length > 75 ? fav.desc.substring(0, 75) + '..' : fav.desc}
                             </Typography>
                         </StyledMenuItem>
                     ))
