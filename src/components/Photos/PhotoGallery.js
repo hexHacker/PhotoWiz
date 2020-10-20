@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Fade, Backdrop, Grid, Modal } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -7,13 +7,6 @@ import Photo from './Photo'
 
 
 const styles = makeStyles((theme) => ({
-    heroContent: {
-        backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(8, 0, 6),
-    },
-    heroButtons: {
-        marginTop: theme.spacing(4),
-    },
     cardGrid: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(8),
@@ -38,7 +31,6 @@ const styles = makeStyles((theme) => ({
     },
     cardContent: {
         flexGrow: 1,
-        // transition: 'all 0.2s ease-in-out'
     },
     typography: {
         textTransform: 'capitalize'
@@ -51,7 +43,6 @@ const styles = makeStyles((theme) => ({
         top: 10,
         zIndex: 999,
         '&:hover': {
-            // color: '#ddd',
             cursor: 'pointer',
             transform: 'scale(1.25)'
         }
@@ -74,9 +65,6 @@ const styles = makeStyles((theme) => ({
         borderRadius: 8,
         padding: 10,
         textTransform: 'capitalize',
-        // '& h3,p': {
-        //     width: '50%'
-        // }
     }
 }));
 
@@ -92,15 +80,18 @@ export default function PhotoGallery(props) {
     }
 
     // callback hook for modalInfo updates
-    useEffect(() => {
-        if (Object.keys(modalInfo).length && !isMobile()) {
-            setOpen(true);
-        }
-    }, [modalInfo]);
+    // useEffect(() => {
+    //     if (Object.keys(modalInfo).length && !isMobile()) {
+    //         setOpen(true);
+    //     }
+    // }, [modalInfo]);
 
 
     const handleOpenDialog = (id) => {
         setModelInfo(props.photos.find((f) => f.id === id));
+        if (!isMobile()) {
+            setOpen(true);
+        }
     };
 
     const handleCloseDialog = () => {
@@ -136,7 +127,7 @@ export default function PhotoGallery(props) {
                 {
                     props.photos.map((photo) => (
                         <Grid item key={photo.id} xs={12} sm={6} md={4}>
-                            <Photo id={photo.id} item={photo} deletePhoto={props.deletePhoto} toggleFavorite={props.toggleFavorite} isFavorite={props.isFavorite} search={props.search} classes={classes} handleOpenDialog={handleOpenDialog} />
+                            <Photo id={photo.id} item={photo} deletePhoto={props.deletePhoto} toggleFavorite={props.toggleFavorite} isFavorite={props.isFavorite} classes={classes} handleOpenDialog={handleOpenDialog} />
                         </Grid>
                     ))
                 }

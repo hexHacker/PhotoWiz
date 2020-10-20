@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AppBar, Toolbar } from '@material-ui/core'
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import DoubleArrowRoundedIcon from '@material-ui/icons/DoubleArrowRounded';
 import ColorLensOutlined from '@material-ui/icons/ColorLensOutlined';
 import InputBase from '@material-ui/core/InputBase';
 import FavoritesMenu from '../components/Favorites/FavoritesMenu'
@@ -54,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
         //     width: '25rem',
         // },
     },
+    searchButton: {
+        position: 'absolute',
+        right: 0,
+        top: 0
+    },
     sectionDesktop: {
         display: 'none',
         [theme.breakpoints.up('md')]: {
@@ -77,10 +83,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
 
     const classes = useStyles();
+    const [search, setSearch] = useState('');
 
     const handleChangeAndEnter = (e) => {
+        setSearch(e.target.value);
         if (e.key === 'Enter' && e.target.value.trim()) {
-            props.handleSearch(e.target.value);
+            props.handleSearch(search);
         }
     }
 
@@ -104,10 +112,16 @@ export default function Header(props) {
                         inputProps={{ 'aria-label': 'search' }}
                         onKeyUp={(e) => handleChangeAndEnter(e)}
                     />
+                    <div className={classes.searchButton}>
+                        <Button>
+                            <DoubleArrowRoundedIcon titleAccess='Go!' onClick={() => props.handleSearch(search)} style={{ color: '#333' }} />
+                        </Button>
+                    </div>
+
                 </div>
 
                 <Button onClick={props.toggleTheme} className={classes.themeIcon}>
-                    <ColorLensOutlined titleAccess="theme" />
+                    <ColorLensOutlined titleAccess="Theme" />
                 </Button>
 
                 <div style={{ position: 'absolute', right: 10 }}>

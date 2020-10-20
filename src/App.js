@@ -1,4 +1,4 @@
-import React, { Component, createContext } from 'react'
+import React, { Component } from 'react'
 import { Backdrop, CircularProgress } from '@material-ui/core';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -24,9 +24,6 @@ const unsplash = new Unsplash({
   accessKey: "cnDKzdyQV7xzUw7pU9UWini2PMmw0qdBEgNUYpoKMOY",
   secret: "FGOUrTjAhyvxDU2IqZnV4ln4LpZEg7YsP0s-hCi9iZU"
 });
-
-
-const ThemeContext = createContext('light');
 
 
 class App extends Component {
@@ -56,7 +53,8 @@ class App extends Component {
       .photos.getRandomPhoto({ "query": this.state.search, "count": 15 })
       .then(toJson)
       .then(json => {
-        this.setState({ photos: json })
+        let photos = this.updateDescriptions(json);
+        this.setState({ photos })
       })
       .catch(() => {
         console.log('error!');
@@ -64,6 +62,25 @@ class App extends Component {
       .finally(() => {
         this.setState({ isUpdating: false })
       })
+  }
+
+
+  // Clean up alt / descriptions, check for null + duplicates  
+  updateDescriptions = photos => {
+    for (let p of photos) {
+      let desc = p.description ? p.description : p.alt_description ? p.alt_description : this.state.search;
+
+      if (!desc) {
+        desc = 'A cool Photo!'
+      }
+
+      if (p.alt_description === desc) {
+        p.alt_description = '';
+      }
+
+      p.description = desc;
+    }
+    return photos
   }
 
 
@@ -124,12 +141,12 @@ class App extends Component {
 
           {this.state.photos.length > 0
             // show photo results
-            ? <PhotoGallery photos={this.state.photos} search={this.state.Search} favorites={this.state.favorites} removeFavorite={this.AadFavorite} deletePhoto={this.DeletePhoto} toggleFavorite={this.ToggleFavorite} isFavorite={this.IsFavorite} />
+            ? <PhotoGallery photos={this.state.photos} favorites={this.state.favorites} removeFavorite={this.AadFavorite} deletePhoto={this.DeletePhoto} toggleFavorite={this.ToggleFavorite} isFavorite={this.IsFavorite} />
 
             // no results message 
-            : <div class='text-info'>
+            : <div className='text-info'>
               {this.state.isUpdating
-                ? <h3></h3>
+                ? <span></span>
                 : <h3>No matching photos found!</h3>
               }
             </div>

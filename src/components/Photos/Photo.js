@@ -11,28 +11,14 @@ import DeleteIcon from '@material-ui/icons/DeleteOutline';
 class Photo extends Component {
 
     render() {
-        const { id, description, urls } = this.props.item;
-        let { alt_description } = this.props.item;
-        const { classes, search } = this.props;
-        //console.log(this.props);
+        const { classes } = this.props;
+        const { id, description, alt_description, urls } = this.props.item;
 
-        // decide what to use for description
-        let desc = description ? description : alt_description ? alt_description : search;
-
-        if (!desc) {
-            desc = 'Photo (no description)'
-        }
-
-        if (!alt_description) {
-            alt_description = desc;
-        }
 
         const handleFavorites = (id, desc) => {
-            const fav = {
-                id,
-                desc//: desc && desc.length > 35 ? desc.substring(0, 35) + '..' : desc
-            }
-            this.props.toggleFavorite(fav);
+            this.props.toggleFavorite({
+                id, desc
+            });
         }
 
         // is this photo in favorites list?
@@ -43,8 +29,8 @@ class Photo extends Component {
             <Card className={classes.card}>
                 <DeleteIcon className={classes.icon + ' ' + classes.deleteIcon} onClick={this.props.deletePhoto.bind(this, id)} />
                 {!this.props.isFavorite(id)
-                    ? <FavIcon className={classes.icon + ' ' + classes.favIcon + ' ' + isFavCss} onClick={handleFavorites.bind(this, id, desc)} />
-                    : <FavIconFilled className={classes.icon + ' ' + classes.favIcon + ' ' + isFavCss} onClick={handleFavorites.bind(this, id, desc)} />
+                    ? <FavIcon className={classes.icon + ' ' + classes.favIcon + ' ' + isFavCss} onClick={handleFavorites.bind(this, id, description)} />
+                    : <FavIconFilled className={classes.icon + ' ' + classes.favIcon + ' ' + isFavCss} onClick={handleFavorites.bind(this, id, description)} />
                 }
                 <CardMedia
                     className={classes.cardMedia}
@@ -54,7 +40,7 @@ class Photo extends Component {
                 />
                 <CardContent className={classes.cardContent}>
                     <Typography className={classes.typography} gutterBottom variant="h6" component="h6">
-                        {desc && desc.substring(0, 50)}
+                        {description && description.substring(0, 50)}
                     </Typography>
                     {/* <p className={classes.typography} >
                         {alt_description && alt_description.substring(0, 50)}
